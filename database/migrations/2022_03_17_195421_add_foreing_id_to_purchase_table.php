@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateItemsTable extends Migration
+class AddForeingIdToPurchaseTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('items', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->double('price');
-            $table->integer('tax');
-            $table->timestamps();
+        Schema::table('purchases', function (Blueprint $table) {
+            $table->foreign('item_id','foreign_item_id')->references('id')->on('items');
         });
     }
 
@@ -29,6 +25,8 @@ class CreateItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items');
+        Schema::table('purchases', function (Blueprint $table) {
+            $table->dropForeign('foreign_item_id');
+        });
     }
 }
