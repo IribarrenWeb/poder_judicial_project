@@ -13,6 +13,7 @@ class DashboardController extends Controller
         $user = auth()->user();
         $items = [];
         $invoices = 0;
+        $bills = [];
         if (!$user->role) {
             $items = Item::all();
         }else{
